@@ -1,22 +1,29 @@
-FROM golang:1.14 AS builder
+FROM golang:1.14-alpine
 
-ADD . /app
-WORKDIR /app
-
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO11MODULE=on go build -mod=vendor -a -o /main .
-
-FROM gcr.io/distroless/base
-
-ARG user=scraper
-ARG group=scraper
+ARG user=kubernetes-event-exporter
+ARG group=kubernetes-event-exporter
 ARG uid=1010
 ARG gid=1010
 
-RUN addgroup -g ${gid} ${group} \
-  && adduser -u ${uid} -G ${group} -s /bin/bash -D ${user}
+WORKDIR /src
 
-COPY --from=builder --chown=scraper:scraper /main /kubernetes-event-exporter
+ADD go.mod /src/go.mod
+ADD go.sum /src/go.sum
 
-USER scraper
+RUN go mod download
 
-ENTRYPOINT ["/kubernetes-event-exporter"]
+ADD . /src
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO11MODULE=on go build -o /src/kubernetes-event-exporter .
+
+RUN mkdir /app \
+  && mv /src/kubernetes-event-exporter /app/kubernetes-event-exporter\
+  && rm -rf /src \
+  && chmod +x /app/kubernetes-event-exporter \
+  && addgroup -g ${gid} ${group} \
+  && adduser -u ${uid} -G ${group} -s /bin/bash -D ${user} \
+  && chown ${uid}:${gid} /app/kubernetes-event-exporter
+
+USER ${user}
+
+ENTRYPOINT ["/app/kubernetes-event-exporter"]
