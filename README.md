@@ -3,7 +3,7 @@
 > This tool is presented at [KubeCon 2019 San Diego](https://kccncna19.sched.com/event/6aa61eca397e4ff2bdbb2845e5aebb81).
 
 This tool allows exporting the often missed Kubernetes events to various outputs so that  they can be used for
-observability or alerting purposes. You won't believe what you are missing.
+observability or alerting purposes. You won't believe what you are missing...
 
 ## Deployment
 
