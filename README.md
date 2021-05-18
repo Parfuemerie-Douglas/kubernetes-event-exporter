@@ -12,6 +12,7 @@ The original project is avaliable at https://github.com/opsgenie/kubernetes-even
 ## Updates made so far in fork
 
 https://github.com/Parfuemerie-Douglas/kubernetes-event-exporter/issues/1
+
 https://github.com/opsgenie/kubernetes-event-exporter/pull/120
 
 
