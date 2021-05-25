@@ -15,6 +15,8 @@ https://github.com/Parfuemerie-Douglas/kubernetes-event-exporter/issues/1
 
 https://github.com/opsgenie/kubernetes-event-exporter/pull/120
 
+https://github.com/opsgenie/kubernetes-event-exporter/issues/76
+
 
 ## Deployment
 
